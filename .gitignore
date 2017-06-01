@@ -1,0 +1,6 @@
+.vagrant/*
+temp/*
+hugo-app/*
+hugo-app-jenkins/*
+hugo-app-travis/*
+hugo-app-wercker/*

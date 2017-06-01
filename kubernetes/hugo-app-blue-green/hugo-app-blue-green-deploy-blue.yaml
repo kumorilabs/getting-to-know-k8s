@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: hugo-app-blue
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: hugo-app-blue-green
+        color: blue
+    spec:
+      containers:
+        - name: hugo-app
+          image: smesch/hugo-app:blue
+          ports:
+            - containerPort: 80

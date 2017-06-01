@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: hugo-app-yellow
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hugo-app-canary
+        track: canary
+    spec:
+      containers:
+        - name: hugo-app
+          image: smesch/hugo-app:yellow
+          ports:
+            - containerPort: 80

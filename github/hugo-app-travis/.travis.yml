@@ -1,0 +1,34 @@
+sudo: required
+
+services:
+  - docker
+
+os:
+- linux
+
+env:
+  global:
+    - DOCKER_IMAGE_NAME="hugo-app-travis"
+    - K8S_DEPLOYMENT_NAME="hugo-app"
+
+before_script:
+- docker pull smesch/hugo
+- docker pull smesch/html-proofer
+- docker pull smesch/kubectl
+- docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
+
+script:
+- docker run -v ${TRAVIS_BUILD_DIR}:/hugo_root smesch/hugo hugo -s /hugo_root
+- docker run -v ${TRAVIS_BUILD_DIR}/public:/public smesch/html-proofer htmlproofer /public --external_only --only-4xx
+
+after_script:
+- docker build -t ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:${TRAVIS_BUILD_ID} .
+- docker push ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:${TRAVIS_BUILD_ID}
+- docker tag ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:${TRAVIS_BUILD_ID} ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:latest
+- docker push ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:latest
+- sed -i -e 's|KUBE_CA_CERT|'"${KUBE_CA_CERT}"'|g' kubeconfig
+- sed -i -e 's|KUBE_ENDPOINT|'"${KUBE_ENDPOINT}"'|g' kubeconfig
+- sed -i -e 's|KUBE_ADMIN_CERT|'"${KUBE_ADMIN_CERT}"'|g' kubeconfig
+- sed -i -e 's|KUBE_ADMIN_KEY|'"${KUBE_ADMIN_KEY}"'|g' kubeconfig
+- sed -i -e 's|KUBE_USERNAME|'"${KUBE_USERNAME}"'|g' kubeconfig
+- docker run -v ${TRAVIS_BUILD_DIR}:/kube smesch/kubectl kubectl --kubeconfig /kube/kubeconfig set image deployment/${K8S_DEPLOYMENT_NAME} ${K8S_DEPLOYMENT_NAME}=${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:$TRAVIS_BUILD_ID

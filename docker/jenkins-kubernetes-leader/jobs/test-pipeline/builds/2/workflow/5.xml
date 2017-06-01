@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<org.jenkinsci.plugins.workflow.support.storage.SimpleXStreamFlowNodeStorage_-Tag plugin="workflow-support@2.14">
+  <node class="org.jenkinsci.plugins.workflow.cps.nodes.StepStartNode" plugin="workflow-cps@2.30">
+    <parentIds>
+      <string>4</string>
+    </parentIds>
+    <id>5</id>
+    <descriptorId>org.jenkinsci.plugins.workflow.support.steps.ExecutorStep</descriptorId>
+  </node>
+  <actions>
+    <org.jenkinsci.plugins.workflow.support.actions.LogActionImpl>
+      <charset>UTF-8</charset>
+    </org.jenkinsci.plugins.workflow.support.actions.LogActionImpl>
+    <org.jenkinsci.plugins.workflow.actions.TimingAction plugin="workflow-api@2.13">
+      <startTime>1494352030636</startTime>
+    </org.jenkinsci.plugins.workflow.actions.TimingAction>
+    <org.jenkinsci.plugins.workflow.support.actions.WorkspaceActionImpl>
+      <node>kubernetes-91c2fd6a1c2348199b21976bd168f76d-21bb989f4b3</node>
+      <path>/home/jenkins/workspace/test-pipeline</path>
+      <labels class="sorted-set">
+        <hudson.model.labels.LabelAtom>pod-golang</hudson.model.labels.LabelAtom>
+      </labels>
+    </org.jenkinsci.plugins.workflow.support.actions.WorkspaceActionImpl>
+  </actions>
+</org.jenkinsci.plugins.workflow.support.storage.SimpleXStreamFlowNodeStorage_-Tag>

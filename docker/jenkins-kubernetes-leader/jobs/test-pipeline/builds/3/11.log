@@ -1,0 +1,9 @@
+[test-pipeline] Running shell script
+Executing shell script inside container [golang] of pod [kubernetes-c4798d15e2fd4cd68a5d94536fcbe93f-22e59e9de29]
+Executing command: sh -c echo $$ > '/home/jenkins/workspace/test-pipeline@tmp/durable-636ac2ec/pid'; jsc=durable-c87f73938bfddb9e385474be4b9a770d; JENKINS_SERVER_COOKIE=$jsc '/home/jenkins/workspace/test-pipeline@tmp/durable-636ac2ec/script.sh' > '/home/jenkins/workspace/test-pipeline@tmp/durable-636ac2ec/jenkins-log.txt' 2>&1; echo $? > '/home/jenkins/workspace/test-pipeline@tmp/durable-636ac2ec/jenkins-result.txt' 
+# cd "/home/jenkins/workspace/test-pipeline"
+sh -c echo $$ > '/home/jenkins/workspace/test-pipeline@tmp/durable-636ac2ec/pid'; jsc=durable-c87f73938bfddb9e385474be4b9a770d; JENKINS_SERVER_COOKIE=$jsc '/home/jenkins/workspace/test-pipeline@tmp/durable-636ac2ec/script.sh' > '/home/jenkins/workspace/test-pipeline@tmp/durable-636ac2ec/jenkins-log.txt' 2>&1; echo $? > '/home/jenkins/workspace/test-pipeline@tmp/durable-636ac2ec/jenkins-result.txt' 
+exit
+# + sleep 60
+Cannot contact kubernetes-c4798d15e2fd4cd68a5d94536fcbe93f-22e59e9de29: java.io.IOException: corrupted content in /home/jenkins/workspace/test-pipeline@tmp/durable-636ac2ec/pid: java.lang.NumberFormatException: For input string: ""
+# 

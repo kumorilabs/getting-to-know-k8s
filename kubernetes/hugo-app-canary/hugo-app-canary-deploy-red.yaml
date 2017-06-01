@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: hugo-app-red
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: hugo-app-canary
+        track: stable
+    spec:
+      containers:
+        - name: hugo-app
+          image: smesch/hugo-app:red
+          ports:
+            - containerPort: 80

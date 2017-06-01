@@ -1,0 +1,29 @@
+Started by user [8mha:////4JfQv/aCYodeFa/ONBJu4SaK1XkMRS3UJNRF8vo1RuTVAAAAlx+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzWEgZu/dLi1CL9xJTczDwAj6GcLcAAAAA=[0madmin
+[8mha:////4AhWCRivhrMPpHgDmuvwHk4GnMussNktNsb2R8odccJpAAAAaB+LCAAAAAAAAP9b85aBtbiIwTG/KF0vKzUvOzOvODlTryCnNB3I0ivPL8pOy8kv18vKT9JLzs8rzs9J1QuHCgaV5jlDhPzyS1IZIICRiYGhoohBKqM0pTg/D64Hh8ICAFt0h+h/AAAA[0m[Pipeline] podTemplate
+[8mha:////4AhWCRivhrMPpHgDmuvwHk4GnMussNktNsb2R8odccJpAAAAaB+LCAAAAAAAAP9b85aBtbiIwTG/KF0vKzUvOzOvODlTryCnNB3I0ivPL8pOy8kv18vKT9JLzs8rzs9J1QuHCgaV5jlDhPzyS1IZIICRiYGhoohBKqM0pTg/D64Hh8ICAFt0h+h/AAAA[0m[Pipeline] {
+[8mha:////4AhWCRivhrMPpHgDmuvwHk4GnMussNktNsb2R8odccJpAAAAaB+LCAAAAAAAAP9b85aBtbiIwTG/KF0vKzUvOzOvODlTryCnNB3I0ivPL8pOy8kv18vKT9JLzs8rzs9J1QuHCgaV5jlDhPzyS1IZIICRiYGhoohBKqM0pTg/D64Hh8ICAFt0h+h/AAAA[0m[Pipeline] node
+Running on kubernetes-91c2fd6a1c2348199b21976bd168f76d-21bb989f4b3 in /home/jenkins/workspace/test-pipeline
+[8mha:////4AhWCRivhrMPpHgDmuvwHk4GnMussNktNsb2R8odccJpAAAAaB+LCAAAAAAAAP9b85aBtbiIwTG/KF0vKzUvOzOvODlTryCnNB3I0ivPL8pOy8kv18vKT9JLzs8rzs9J1QuHCgaV5jlDhPzyS1IZIICRiYGhoohBKqM0pTg/D64Hh8ICAFt0h+h/AAAA[0m[Pipeline] {
+[8mha:////4AhWCRivhrMPpHgDmuvwHk4GnMussNktNsb2R8odccJpAAAAaB+LCAAAAAAAAP9b85aBtbiIwTG/KF0vKzUvOzOvODlTryCnNB3I0ivPL8pOy8kv18vKT9JLzs8rzs9J1QuHCgaV5jlDhPzyS1IZIICRiYGhoohBKqM0pTg/D64Hh8ICAFt0h+h/AAAA[0m[Pipeline] stage (Switch to Utility Container)
+Using the ‘stage’ step without a block argument is deprecated
+Entering stage Switch to Utility Container
+Proceeding
+[8mha:////4AhWCRivhrMPpHgDmuvwHk4GnMussNktNsb2R8odccJpAAAAaB+LCAAAAAAAAP9b85aBtbiIwTG/KF0vKzUvOzOvODlTryCnNB3I0ivPL8pOy8kv18vKT9JLzs8rzs9J1QuHCgaV5jlDhPzyS1IZIICRiYGhoohBKqM0pTg/D64Hh8ICAFt0h+h/AAAA[0m[Pipeline] container
+[8mha:////4AhWCRivhrMPpHgDmuvwHk4GnMussNktNsb2R8odccJpAAAAaB+LCAAAAAAAAP9b85aBtbiIwTG/KF0vKzUvOzOvODlTryCnNB3I0ivPL8pOy8kv18vKT9JLzs8rzs9J1QuHCgaV5jlDhPzyS1IZIICRiYGhoohBKqM0pTg/D64Hh8ICAFt0h+h/AAAA[0m[Pipeline] {
+[8mha:////4AhWCRivhrMPpHgDmuvwHk4GnMussNktNsb2R8odccJpAAAAaB+LCAAAAAAAAP9b85aBtbiIwTG/KF0vKzUvOzOvODlTryCnNB3I0ivPL8pOy8kv18vKT9JLzs8rzs9J1QuHCgaV5jlDhPzyS1IZIICRiYGhoohBKqM0pTg/D64Hh8ICAFt0h+h/AAAA[0m[Pipeline] sh
+[test-pipeline] Running shell script
+Executing shell script inside container [golang] of pod [kubernetes-91c2fd6a1c2348199b21976bd168f76d-21bb989f4b3]
+Executing command: sh -c echo $$ > '/home/jenkins/workspace/test-pipeline@tmp/durable-003e6bb5/pid'; jsc=durable-c87f73938bfddb9e385474be4b9a770d; JENKINS_SERVER_COOKIE=$jsc '/home/jenkins/workspace/test-pipeline@tmp/durable-003e6bb5/script.sh' > '/home/jenkins/workspace/test-pipeline@tmp/durable-003e6bb5/jenkins-log.txt' 2>&1; echo $? > '/home/jenkins/workspace/test-pipeline@tmp/durable-003e6bb5/jenkins-result.txt' 
+# cd "/home/jenkins/workspace/test-pipeline"
+# sh -c echo $$ > '/home/jenkins/workspace/test-pipeline@tmp/durable-003e6bb5/pid'; jsc=durable-c87f73938bfddb9e385474be4b9a770d; JENKINS_SERVER_COOKIE=$jsc '/home/jenkins/workspace/test-pipeline@tmp/durable-003e6bb5/script.sh' > '/home/jenkins/workspace/test-pipeline@tmp/durable-003e6bb5/jenkins-log.txt' 2>&1; echo $? > '/home/jenkins/workspace/test-pipeline@tmp/durable-003e6bb5/jenkins-result.txt' 
+exit
+# + go version
+go version go1.8.1 linux/amd64
+[8mha:////4AhWCRivhrMPpHgDmuvwHk4GnMussNktNsb2R8odccJpAAAAaB+LCAAAAAAAAP9b85aBtbiIwTG/KF0vKzUvOzOvODlTryCnNB3I0ivPL8pOy8kv18vKT9JLzs8rzs9J1QuHCgaV5jlDhPzyS1IZIICRiYGhoohBKqM0pTg/D64Hh8ICAFt0h+h/AAAA[0m[Pipeline] }
+[8mha:////4AhWCRivhrMPpHgDmuvwHk4GnMussNktNsb2R8odccJpAAAAaB+LCAAAAAAAAP9b85aBtbiIwTG/KF0vKzUvOzOvODlTryCnNB3I0ivPL8pOy8kv18vKT9JLzs8rzs9J1QuHCgaV5jlDhPzyS1IZIICRiYGhoohBKqM0pTg/D64Hh8ICAFt0h+h/AAAA[0m[Pipeline] // container
+[8mha:////4AhWCRivhrMPpHgDmuvwHk4GnMussNktNsb2R8odccJpAAAAaB+LCAAAAAAAAP9b85aBtbiIwTG/KF0vKzUvOzOvODlTryCnNB3I0ivPL8pOy8kv18vKT9JLzs8rzs9J1QuHCgaV5jlDhPzyS1IZIICRiYGhoohBKqM0pTg/D64Hh8ICAFt0h+h/AAAA[0m[Pipeline] }
+[8mha:////4AhWCRivhrMPpHgDmuvwHk4GnMussNktNsb2R8odccJpAAAAaB+LCAAAAAAAAP9b85aBtbiIwTG/KF0vKzUvOzOvODlTryCnNB3I0ivPL8pOy8kv18vKT9JLzs8rzs9J1QuHCgaV5jlDhPzyS1IZIICRiYGhoohBKqM0pTg/D64Hh8ICAFt0h+h/AAAA[0m[Pipeline] // node
+[8mha:////4AhWCRivhrMPpHgDmuvwHk4GnMussNktNsb2R8odccJpAAAAaB+LCAAAAAAAAP9b85aBtbiIwTG/KF0vKzUvOzOvODlTryCnNB3I0ivPL8pOy8kv18vKT9JLzs8rzs9J1QuHCgaV5jlDhPzyS1IZIICRiYGhoohBKqM0pTg/D64Hh8ICAFt0h+h/AAAA[0m[Pipeline] }
+[8mha:////4AhWCRivhrMPpHgDmuvwHk4GnMussNktNsb2R8odccJpAAAAaB+LCAAAAAAAAP9b85aBtbiIwTG/KF0vKzUvOzOvODlTryCnNB3I0ivPL8pOy8kv18vKT9JLzs8rzs9J1QuHCgaV5jlDhPzyS1IZIICRiYGhoohBKqM0pTg/D64Hh8ICAFt0h+h/AAAA[0m[Pipeline] // podTemplate
+[8mha:////4AhWCRivhrMPpHgDmuvwHk4GnMussNktNsb2R8odccJpAAAAaB+LCAAAAAAAAP9b85aBtbiIwTG/KF0vKzUvOzOvODlTryCnNB3I0ivPL8pOy8kv18vKT9JLzs8rzs9J1QuHCgaV5jlDhPzyS1IZIICRiYGhoohBKqM0pTg/D64Hh8ICAFt0h+h/AAAA[0m[Pipeline] End of Pipeline
+Finished: SUCCESS

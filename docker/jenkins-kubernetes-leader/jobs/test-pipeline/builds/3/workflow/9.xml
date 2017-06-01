@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<org.jenkinsci.plugins.workflow.support.storage.SimpleXStreamFlowNodeStorage_-Tag plugin="workflow-support@2.14">
+  <node class="org.jenkinsci.plugins.workflow.cps.nodes.StepStartNode" plugin="workflow-cps@2.30">
+    <parentIds>
+      <string>8</string>
+    </parentIds>
+    <id>9</id>
+    <descriptorId>org.csanchez.jenkins.plugins.kubernetes.pipeline.ContainerStep</descriptorId>
+  </node>
+  <actions>
+    <org.jenkinsci.plugins.workflow.actions.BodyInvocationAction plugin="workflow-api@2.13"/>
+    <org.jenkinsci.plugins.workflow.actions.TimingAction plugin="workflow-api@2.13">
+      <startTime>1494352122914</startTime>
+    </org.jenkinsci.plugins.workflow.actions.TimingAction>
+  </actions>
+</org.jenkinsci.plugins.workflow.support.storage.SimpleXStreamFlowNodeStorage_-Tag>

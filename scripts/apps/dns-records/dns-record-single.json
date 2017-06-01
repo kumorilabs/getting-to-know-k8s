@@ -1,0 +1,18 @@
+{
+  "Comment": "Create/Update a CNAME record for a standalone Deployment",
+  "Changes": [
+    {
+      "Action": "UPSERT",
+      "ResourceRecordSet": {
+        "Name": "iis-default.k8s.kumorilabs.com",
+        "Type": "CNAME",
+        "TTL": 300,
+        "ResourceRecords": [
+          {
+            "Value": " a09b421df3ff311e78b590a4d2b07e24-189360430.us-east-1.elb.amazonaws.com "
+          }
+        ]
+      }
+    }
+  ]
+}

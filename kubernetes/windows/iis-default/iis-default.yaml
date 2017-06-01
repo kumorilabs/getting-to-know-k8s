@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: iis-default
+  name: iis-default
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: iis-default
+      name: iis-default
+    spec:
+      containers:
+      - name: iis-default
+        image: microsoft/iis:nanoserver
+        ports:
+          - containerPort: 80
+      nodeSelector:
+        beta.kubernetes.io/os: windows

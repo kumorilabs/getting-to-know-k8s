@@ -1,0 +1,8 @@
+[test-pipeline] Running shell script
+Executing shell script inside container [golang] of pod [kubernetes-91c2fd6a1c2348199b21976bd168f76d-21bb989f4b3]
+Executing command: sh -c echo $$ > '/home/jenkins/workspace/test-pipeline@tmp/durable-003e6bb5/pid'; jsc=durable-c87f73938bfddb9e385474be4b9a770d; JENKINS_SERVER_COOKIE=$jsc '/home/jenkins/workspace/test-pipeline@tmp/durable-003e6bb5/script.sh' > '/home/jenkins/workspace/test-pipeline@tmp/durable-003e6bb5/jenkins-log.txt' 2>&1; echo $? > '/home/jenkins/workspace/test-pipeline@tmp/durable-003e6bb5/jenkins-result.txt' 
+# cd "/home/jenkins/workspace/test-pipeline"
+# sh -c echo $$ > '/home/jenkins/workspace/test-pipeline@tmp/durable-003e6bb5/pid'; jsc=durable-c87f73938bfddb9e385474be4b9a770d; JENKINS_SERVER_COOKIE=$jsc '/home/jenkins/workspace/test-pipeline@tmp/durable-003e6bb5/script.sh' > '/home/jenkins/workspace/test-pipeline@tmp/durable-003e6bb5/jenkins-log.txt' 2>&1; echo $? > '/home/jenkins/workspace/test-pipeline@tmp/durable-003e6bb5/jenkins-result.txt' 
+exit
+# + go version
+go version go1.8.1 linux/amd64

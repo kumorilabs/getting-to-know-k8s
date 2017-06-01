@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<flow-build plugin="workflow-job@2.10">
+  <actions>
+    <hudson.model.CauseAction>
+      <causeBag class="linked-hash-map">
+        <entry>
+          <hudson.model.Cause_-UserIdCause>
+            <userId>admin</userId>
+          </hudson.model.Cause_-UserIdCause>
+          <int>1</int>
+        </entry>
+      </causeBag>
+    </hudson.model.CauseAction>
+    <org.jenkinsci.plugins.workflow.libs.LibrariesAction plugin="workflow-cps-global-lib@2.8">
+      <libraries/>
+    </org.jenkinsci.plugins.workflow.libs.LibrariesAction>
+    <org.csanchez.jenkins.plugins.kubernetes.pipeline.PodTemplateAction plugin="kubernetes@0.11">
+      <names serialization="custom">
+        <unserializable-parents/>
+        <vector>
+          <default>
+            <capacityIncrement>0</capacityIncrement>
+            <elementCount>1</elementCount>
+            <elementData>
+              <string>pod-golang</string>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+              <null/>
+            </elementData>
+          </default>
+        </vector>
+      </names>
+      <run class="flow-build" reference="../../.."/>
+    </org.csanchez.jenkins.plugins.kubernetes.pipeline.PodTemplateAction>
+  </actions>
+  <queueId>3</queueId>
+  <timestamp>1494352030533</timestamp>
+  <startTime>1494352030533</startTime>
+  <result>SUCCESS</result>
+  <duration>13891</duration>
+  <keepLog>false</keepLog>
+  <execution class="org.jenkinsci.plugins.workflow.cps.CpsFlowExecution">
+    <result>SUCCESS</result>
+    <script>podTemplate(label: &apos;pod-golang&apos;, 
+    containers: [
+        containerTemplate(
+            name: &apos;golang&apos;,
+            image: &apos;golang&apos;,
+            ttyEnabled: true,
+            command: &apos;cat&apos;
+        )
+    ]
+) {
+    node (&apos;pod-golang&apos;) {
+
+        stage &apos;Switch to Utility Container&apos;
+        container(&apos;golang&apos;) {
+
+          sh (&quot;go version&quot;)
+
+        }
+    }
+}</script>
+    <loadedScripts class="map"/>
+    <sandbox>true</sandbox>
+    <iota>17</iota>
+    <head>1:17</head>
+  </execution>
+  <checkouts class="hudson.util.PersistedList"/>
+</flow-build>

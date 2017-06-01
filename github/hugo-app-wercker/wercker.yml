@@ -1,0 +1,48 @@
+box: ruby
+build:
+  steps:
+    - arjen/hugo-build:
+        version: "0.20"
+        flags: --uglyURLs
+
+test:
+  steps:
+    - kyleboyle/html-proofer-test:
+        version: "2.3.0"
+        basedir: public
+        arguments: --checks-to-ignore ImageCheck --only-4xx
+
+push:
+  box: 
+      id: nginx:alpine
+      cmd: /bin/sh
+  steps:
+    - script:
+        name: Copy Hugo output to NGINX root
+        code: |
+          cp -a ${WERCKER_ROOT}/public/* /usr/share/nginx/html       
+    - internal/docker-push:
+        cmd: nginx -g "daemon off;"
+        username: ${DOCKER_USERNAME}
+        password: ${DOCKER_PASSWORD}
+        tag: ${WERCKER_GIT_COMMIT}
+        repository: ${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}
+        registry: https://registry.hub.docker.com
+
+deploy:
+  steps:  
+    - script:
+        name: Kubeconfig template file population
+        code: |
+          sed -i -e 's|KUBE_CA_CERT|'"${KUBE_CA_CERT}"'|g' kubeconfig
+          sed -i -e 's|KUBE_ENDPOINT|'"${KUBE_ENDPOINT}"'|g' kubeconfig
+          sed -i -e 's|KUBE_ADMIN_CERT|'"${KUBE_ADMIN_CERT}"'|g' kubeconfig
+          sed -i -e 's|KUBE_ADMIN_KEY|'"${KUBE_ADMIN_KEY}"'|g' kubeconfig
+          sed -i -e 's|KUBE_USERNAME|'"${KUBE_USERNAME}"'|g' kubeconfig
+    - kubectl:
+        server: ${KUBE_ENDPOINT}
+        username: ${KUBE_USERNAME}
+        command: --kubeconfig kubeconfig set image deployment/${K8S_DEPLOYMENT_NAME} ${K8S_DEPLOYMENT_NAME}=${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:${WERCKER_GIT_COMMIT}
+    - script:
+        name: Remove kubeconfig file
+        code: rm kubeconfig
