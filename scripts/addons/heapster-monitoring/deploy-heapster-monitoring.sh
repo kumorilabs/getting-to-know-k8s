@@ -11,4 +11,4 @@ echo "Deploying Heapster on Cluster: ${CLUSTER_ALIAS}"; fi
 sleep 3
 
 # Deploy Heapster Monitoring
-kubectl --context ${CLUSTER_ALIAS} create -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/monitoring-standalone/v1.2.0.yaml
+kubectl --context ${CLUSTER_ALIAS} create -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/monitoring-standalone/v1.7.0.yaml

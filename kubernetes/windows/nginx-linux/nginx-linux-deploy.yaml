@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx-linux
+  name: nginx-linux
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: nginx-linux
+      name: nginx-linux
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+      nodeSelector:
+        beta.kubernetes.io/os: linux

@@ -5,7 +5,7 @@ metadata:
     app: iis-default
   name: iis-default
 spec:
-  replicas: 1
+  replicas: 2
   template:
     metadata:
       labels:

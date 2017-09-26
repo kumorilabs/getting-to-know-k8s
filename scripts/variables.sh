@@ -10,7 +10,7 @@ export CLUSTER_MASTER_SIZE="t2.medium"
 export CLUSTER_NODE_SIZE="t2.medium"
 export CLUSTER_NODE_COUNT="2"
 export AWS_KEYPAIR_PUB_KEY_PATH="~/.ssh/id_rsa.pub"
-export K8S_VERSION="1.6.4"
+export K8S_VERSION="1.7.6"
 
 # Federation variables
 export FEDERATION_NAME="fed"

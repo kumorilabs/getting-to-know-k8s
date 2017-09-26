@@ -11,4 +11,4 @@ echo "Deploying Dashboard on Cluster: ${CLUSTER_ALIAS}"; fi
 sleep 3
 
 # Deploy Kubernetes Dashboard Monitoring
-kubectl --context ${CLUSTER_ALIAS} create -f https://rawgit.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml
+kubectl --context ${CLUSTER_ALIAS} apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/alternative/kubernetes-dashboard.yaml

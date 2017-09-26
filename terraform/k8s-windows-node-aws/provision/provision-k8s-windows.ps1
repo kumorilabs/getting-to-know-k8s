@@ -13,7 +13,15 @@ param(
 
     [parameter(Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
-    $AWSHostPrivateIP,
+    $AWSK8sWinHostNic1,
+
+    [parameter(Mandatory=$true)]
+    [ValidateNotNullOrEmpty()]
+    $AWSK8sWinHostNic2,
+
+    [parameter(Mandatory=$true)]
+    [ValidateNotNullOrEmpty()]
+    $AWSK8sWinHostNic3,
 
     [parameter(Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
@@ -50,13 +58,31 @@ Write-Log($message)
 
 
 function
+Set-BaseNetwork()
+{
+    $nic1 = Get-NetIPAddress | Where-Object IPAddress -Eq ${AWSK8sWinHostNic1} | Select -ExpandProperty InterfaceAlias
+    $nic2 = Get-NetIPAddress | Where-Object IPAddress -Eq ${AWSK8sWinHostNic2} | Select -ExpandProperty InterfaceAlias
+    $nic3 = Get-NetIPAddress | Where-Object IPAddress -Eq ${AWSK8sWinHostNic3} | Select -ExpandProperty InterfaceAlias
+
+    Get-NetAdapter -Name $nic1 | Rename-NetAdapter -NewName "nic-1-external" -PassThru
+    Get-NetAdapter -Name $nic2 | Rename-NetAdapter -NewName "nic-2-docker" -PassThru
+    Get-NetAdapter -Name $nic3 | Rename-NetAdapter -NewName "nic-3-internal" -PassThru
+
+    Remove-NetRoute -DestinationPrefix 0.0.0.0/0 -InterfaceAlias "nic-2-docker" -AsJob
+    Remove-NetRoute -DestinationPrefix 0.0.0.0/0 -InterfaceAlias "nic-3-internal" -AsJob
+
+    New-NetRoute -DestinationPrefix ${NonMasqCIDR} -InterfaceAlias "nic-3-internal"
+}
+
+
+function
 Get-KubeBinaries()
 {
     cd $global:KubeDir
-    (New-Object System.Net.WebClient).DownloadFile("$global:7ZipBinariesURL", "$global:KubeDir\7z.zip")
+    do{sleep 10;(New-Object System.Net.WebClient).DownloadFile("$global:7ZipBinariesURL", "$global:KubeDir\7z.zip")}while(!$?);&"$global:KubeDir\7z.zip"
     Expand-Archive .\7z.zip -DestinationPath .\7z\
     mv 7z\7za.exe .
-    (New-Object System.Net.WebClient).DownloadFile("$global:KubeBinariesURL", "$global:KubeDir\kubernetes-node-windows-amd64.tar.gz")
+    do{sleep 10;(New-Object System.Net.WebClient).DownloadFile("$global:KubeBinariesURL", "$global:KubeDir\kubernetes-node-windows-amd64.tar.gz")}while(!$?);&"$global:KubeDir\kubernetes-node-windows-amd64.tar.gz"
     cmd /c "$global:KubeDir\7za.exe e kubernetes-node-windows-amd64.tar.gz"
     cmd /c "$global:KubeDir\7za.exe x kubernetes-node-windows-amd64.tar"
     mv kubernetes\node\bin\*.exe .
@@ -70,7 +96,7 @@ function
 Get-NSSMBinary()
 {
     cd $global:KubeDir
-    (New-Object System.Net.WebClient).DownloadFile("$global:NSSMBinariesURL", "$global:KubeDir\nssm.zip")
+    do{sleep 10;(New-Object System.Net.WebClient).DownloadFile("$global:NSSMBinariesURL", "$global:KubeDir\nssm.zip")}while(!$?);&"$global:KubeDir\nssm.zip"
     Expand-Archive .\nssm.zip -DestinationPath .
     mv nssm-2.24\win64\nssm.exe .
     Remove-Item -Recurse -Force nssm.zip
@@ -81,6 +107,8 @@ Get-NSSMBinary()
 function
 Get-InfraContainer()
 {
+    Restart-Service docker
+    Start-Sleep -s 5
     docker pull $global:PodInfraContainerName
 }
 
@@ -88,7 +116,7 @@ Get-InfraContainer()
 function
 Get-PodCIDR
 {
-    $argList = @("--experimental-cri=false","--hostname-override=${AWSHostname}","--pod-infra-container-image=${global:PodInfraContainerName}","--resolv-conf=""""","--kubeconfig=${global:KubeDir}\config","--require-kubeconfig")
+    $argList = @("--hostname-override=${AWSHostname}","--pod-infra-container-image=${global:PodInfraContainerName}","--resolv-conf=""""","--kubeconfig=${global:KubeDir}\config","--require-kubeconfig")
     $process = Start-Process -FilePath $global:KubeDir\kubelet.exe -PassThru -ArgumentList $argList
 
     $podCIDRDiscovered=$false
@@ -131,13 +159,13 @@ Write-KubernetesStartFiles($podCIDR)
 
     $kubeConfig = @"
 `$env:CONTAINER_NETWORK="${global:TransparentNetworkName}"
-${global:KubeDir}\kubelet.exe --experimental-cri=false --hostname-override=${AWSHostname} --pod-infra-container-image=${global:PodInfraContainerName} --resolv-conf="" --allow-privileged=true --enable-debugging-handlers=true --cluster-dns=${KubeDnsServiceIp} --cluster-domain=cluster.local  --kubeconfig=${global:KubeDir}\config --require-kubeconfig --hairpin-mode=promiscuous-bridge --v=2 --non-masquerade-cidr=${NonMasqCIDR}
+${global:KubeDir}\kubelet.exe --hostname-override=${AWSHostname} --pod-infra-container-image=${global:PodInfraContainerName} --resolv-conf="" --allow-privileged=true --enable-debugging-handlers=true --cluster-dns=${KubeDnsServiceIp} --cluster-domain=cluster.local  --kubeconfig=${global:KubeDir}\config --require-kubeconfig --hairpin-mode=promiscuous-bridge --v=2 --non-masquerade-cidr=${NonMasqCIDR}
 "@
     $kubeConfig | Out-File -encoding ASCII -filepath $global:KubeletStartFile
 
     $kubeProxyStartStr = @"
 `$env:INTERFACE_TO_ADD_SERVICE_IP="vEthernet (${global:VMSwitchNetworkName})"
-$global:KubeDir\kube-proxy.exe --v=3 --proxy-mode=userspace --hostname-override=${AWSHostname} --kubeconfig=${global:KubeDir}\config --bind-address=${AWSHostPrivateIP}
+$global:KubeDir\kube-proxy.exe --v=3 --proxy-mode=userspace --hostname-override=${AWSHostname} --kubeconfig=${global:KubeDir}\config --bind-address=${AWSK8sWinHostNic1}
 "@
 
     $kubeProxyStartStr | Out-File -encoding ASCII -filepath $global:KubeProxyStartFile
@@ -149,25 +177,47 @@ Set-DockerNetwork($podCIDR)
 {
     $podGW=Get-PodGateway($podCIDR)
 
-    # Create VMSwitch for kube-proxy
-    New-VMSwitch -Name ${global:VMSwitchNetworkName} -SwitchType Internal
-
     # Reduce MTU for both network interfaces to stop RDP from breaking
-    netsh interface ipv4 set interface "Ethernet 2" mtu=1430 store=persistent
-    netsh interface ipv4 set interface "Ethernet 3" mtu=1430 store=persistent
+    netsh interface ipv4 set interface "nic-1-external" mtu=1430 store=persistent
+    netsh interface ipv4 set interface "nic-2-docker" mtu=1430 store=persistent
+    netsh interface ipv4 set interface "nic-3-internal" mtu=1430 store=persistent
+
+    # Turn off Firewall to enable pods to talk to service endpoints
+    netsh advfirewall set allprofiles state off
 
     # Create new transparent network
-    docker network create --driver=transparent --subnet=${podCIDR} --gateway=${podGW} -o com.docker.network.windowsshim.interface="Ethernet 3" ${global:TransparentNetworkName}
+    docker network create --driver=transparent --subnet=${podCIDR} --gateway=${podGW} -o com.docker.network.windowsshim.interface="nic-2-docker" -o com.docker.network.windowsshim.dnsservers=${KubeDnsServiceIp} ${global:TransparentNetworkName}
 
     # Set IP address for Transparent network
     netsh interface ipv4 add address "vEthernet (HNSTransparent)" ${podGW} 255.255.255.0
 
-    # Enable forwarding on host adapters:
+    # Create VMSwitch for kube-proxy
+    New-VMSwitch -Name ${global:VMSwitchNetworkName} -SwitchType Internal
+
+    # Enable forwarding on host adapters
     netsh interface ipv4 set interface "vEthernet (${global:VMSwitchNetworkName})" for=en
     netsh interface ipv4 set interface "vEthernet (HNSTransparent)" for=en
+    netsh interface ipv4 set interface "nic-1-external" for=en
+    netsh interface ipv4 set interface "nic-3-internal" for=en
+}
 
-    # Turn off Firewall to enable pods to talk to service endpoints. (Kubelet should eventually do this)
-    netsh advfirewall set allprofiles state off    
+
+function
+Set-RoutingNat()
+{
+    # Install and enable RRAS
+    Install-WindowsFeature Routing -IncludeManagementTools
+    Install-RemoteAccess -VpnType Vpn
+
+    # Pause for 30 seconds
+    sleep 30
+
+    # Configure RRAS for NAT to enable external connectivity from pods
+    netsh routing ip nat install
+    sleep 30
+    netsh routing ip nat add interface "nic-1-external"
+    sleep 30
+    netsh routing ip nat set interface "nic-1-external" mode=full 
 }
 
 
@@ -194,7 +244,7 @@ New-NSSMService
     C:\k8s\nssm set Kubelet AppRotateBytes 1048576
     net start Kubelet
     
-    # setup Kube-proxy Service
+    # Setup Kube-proxy Service
     C:\k8s\nssm install Kubeproxy C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
     C:\k8s\nssm set Kubeproxy AppDirectory $global:KubeDir
     C:\k8s\nssm set Kubeproxy AppParameters $global:KubeProxyStartFile
@@ -231,6 +281,9 @@ try
     if ($true) {
         Write-Log "Setting up K8s Windows Node..."
 
+        Write-Log "Setup the base network"
+        Set-BaseNetwork
+    
         Write-Log "Download Kubernetes binaries"
         Get-KubeBinaries
 
@@ -249,6 +302,9 @@ try
         Write-Log "Setup Docker network with pod CIDR of $podCIDR"
         Set-DockerNetwork $podCIDR
 
+        Write-Log "Setup Routing and Remote Access for NAT"
+        Set-RoutingNat
+
         Write-Log "Install the NSSM services"
         New-NSSMService
 
@@ -260,7 +316,7 @@ try
     else 
     {
         # Keep for debugging purposes
-        Write-Log ".\provision-k8s-windows.ps1 -AWSHostname $AWSHostname -AWSHostPrivateIP $AWSHostPrivateIP -KubeDnsServiceIp $KubeDnsServiceIp -NonMasqCIDR $NonMasqCIDR"
+        Write-Log ".\provision-k8s-windows.ps1 -AWSHostname $AWSHostname -AWSK8sWinHostNic1 $AWSK8sWinHostNic1 -AWSK8sWinHostNic2 $AWSK8sWinHostNic2 -AWSK8sWinHostNic3 $AWSK8sWinHostNic3 -KubeDnsServiceIp $KubeDnsServiceIp -NonMasqCIDR $NonMasqCIDR -K8sVersion $K8sVersion"
     }
 }
 catch

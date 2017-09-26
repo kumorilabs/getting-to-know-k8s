@@ -3,7 +3,7 @@
 DOCKER  = docker
 REPO    = smesch
 NAME    = kubectl
-VERSION = latest
+VERSION = 1.7.3
 
 all: build
 
@@ -15,3 +15,7 @@ tag: build
 
 push: tag
 	$(DOCKER) push $(REPO)/$(NAME):$(VERSION)
+
+latest: push
+	$(DOCKER) tag $(NAME) $(REPO)/$(NAME):latest
+	$(DOCKER) push $(REPO)/$(NAME):latest

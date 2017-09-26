@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: mongodb-linux
+  name: mongodb-linux
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mongodb-linux
+      name: mongodb-linux
+    spec:
+      containers:
+      - name: mongodb-linux
+        image: mongo:latest
+        ports:
+          - containerPort: 27017
+      nodeSelector:
+        beta.kubernetes.io/os: linux

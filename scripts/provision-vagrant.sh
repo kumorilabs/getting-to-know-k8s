@@ -1,9 +1,9 @@
 # Vagrant installation variables
-export KUBECTL_VERSION="1.6.4"
-export KUBEFED_VERSION="1.6.4"
-export KOPS_VERSION="1.6.0"
-export HUGO_VERSION="0.20"
-export TERRAFORM_VERSION="0.9.6"
+export KUBECTL_VERSION="1.7.6"
+export KUBEFED_VERSION="1.7.6"
+export KOPS_VERSION="1.7.0"
+export HUGO_VERSION="0.27.1"
+export TERRAFORM_VERSION="0.10.6"
 
 # Change to Vagrant home directory
 cd /home/vagrant
@@ -26,9 +26,9 @@ sudo usermod -aG docker vagrant
 # Install Hugo (version specified in Vagrant installation variables above)
 wget --quiet https://github.com/spf13/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_Linux-64bit.tar.gz
 tar -xf hugo_${HUGO_VERSION}_Linux-64bit.tar.gz
-sudo chmod +x hugo_${HUGO_VERSION}_linux_amd64/hugo_${HUGO_VERSION}_linux_amd64
-sudo mv hugo_${HUGO_VERSION}_linux_amd64/hugo_${HUGO_VERSION}_linux_amd64 /usr/local/bin/hugo
-rm -rf hugo_${HUGO_VERSION}_linux_amd64/ hugo_${HUGO_VERSION}_Linux-64bit.tar.gz
+sudo chmod +x hugo
+sudo mv hugo /usr/local/bin/hugo
+rm -rf hugo_${HUGO_VERSION}_Linux-64bit.tar.gz
 
 # Install Terraform (version specified in Vagrant installation variables above)
 wget --quiet https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip

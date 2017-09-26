@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: react-bookmarks-windows
+  name: react-bookmarks-windows
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: react-bookmarks-windows
+      name: react-bookmarks-windows
+    spec:
+      containers:
+      - name: react-bookmarks-windows
+        image: smesch/react-bookmarks-windows:1.0
+        ports:
+         - containerPort: 8888
+        env:
+         - name: REACT_BOOKMARKS_LOCAL_PORT
+           value: "8888"
+         - name: REACT_BOOKMARKS_MONGODB_HOST
+           value: mongodb-linux:27017
+         - name: REACT_BOOKMARKS_MONGODB_NAME
+           value: react-bookmarks
+         - name: REACT_BOOKMARKS_MONGODB_COLLECTION
+           value: bookmarks
+      nodeSelector:
+        beta.kubernetes.io/os: windows

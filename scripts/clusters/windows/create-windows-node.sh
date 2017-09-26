@@ -22,5 +22,11 @@ export TF_VAR_k8s_subnet_id=$(aws ec2 describe-instances --region ${CLUSTER_AWS_
 sleep 3
 
 # Change to the Terraform directory and apply the Terraform configuration
-cd terraform/windows-node-aws
-terraform apply
+cd terraform/k8s-windows-node-aws
+rm -rf .terraform/
+rm *terraform.tfstate*
+terraform get
+terraform init
+terraform plan
+
+echo "Run 'terraform apply' to deploy"
