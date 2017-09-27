@@ -1,7 +1,7 @@
 FROM alpine:latest
 MAINTAINER Steven Eschinger <steven@kumorilabs.com>
 
-ENV KUBECTL_VERSION=1.7.3
+ENV KUBECTL_VERSION=1.7.6
 
 USER root
 

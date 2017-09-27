@@ -37,7 +37,7 @@ sudo usermod -aG docker ${USER}
 * [Hugo](https://gohugo.io/overview/installing/)
 
 ```bash
-export HUGO_VERSION="0.20"
+export HUGO_VERSION="0.27.1"
 wget https://github.com/spf13/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_Linux-64bit.tar.gz
 tar -xf hugo_${HUGO_VERSION}_Linux-64bit.tar.gz
 sudo chmod +x hugo_${HUGO_VERSION}_linux_amd64/hugo_${HUGO_VERSION}_linux_amd64
@@ -48,7 +48,7 @@ rm -rf hugo_${HUGO_VERSION}_linux_amd64/ hugo_${HUGO_VERSION}_Linux-64bit.tar.gz
 * [Terraform](https://www.terraform.io/downloads.html)
 
 ```bash
-export TERRAFORM_VERSION="0.9.6"
+export TERRAFORM_VERSION="0.10.6"
 wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 sudo chmod +x terraform
@@ -59,7 +59,7 @@ rm -rf terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 * [Kubectl](https://kubernetes.io/docs/tasks/kubectl/install/)
 
 ```bash
-export KUBECTL_VERSION="1.6.4"
+export KUBECTL_VERSION="1.7.6"
 wget https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl
 sudo chmod +x kubectl
 sudo mv kubectl /usr/local/bin/kubectl
@@ -68,7 +68,7 @@ sudo mv kubectl /usr/local/bin/kubectl
 * [Kubefed](https://kubernetes.io/docs/tutorials/federation/set-up-cluster-federation-kubefed/#getting-kubefed)
 
 ```bash
-export KUBEFED_VERSION="1.6.4"
+export KUBEFED_VERSION="1.7.6"
 wget https://storage.googleapis.com/kubernetes-release/release/v${KUBEFED_VERSION}/bin/linux/amd64/kubefed
 sudo chmod +x kubefed
 sudo mv kubefed /usr/local/bin/kubefed
@@ -77,7 +77,7 @@ sudo mv kubefed /usr/local/bin/kubefed
 * [Kops](https://github.com/kubernetes/kops#installing)
 
 ```bash
-export KOPS_VERSION="1.6.0"
+export KOPS_VERSION="1.7.0"
 wget https://github.com/kubernetes/kops/releases/download/${KOPS_VERSION}/kops-linux-amd64
 sudo chmod +x kops-linux-amd64
 sudo mv kops-linux-amd64 /usr/local/bin/kops

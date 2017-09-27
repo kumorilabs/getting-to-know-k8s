@@ -96,11 +96,11 @@ You can change the versions of the tools that will be installed on the Vagrant b
 
 ```bash
 # Vagrant installation variables
-export KUBECTL_VERSION="1.6.4"
-export KUBEFED_VERSION="1.6.4"
-export KOPS_VERSION="1.6.0"
-export HUGO_VERSION="0.20"
-export TERRAFORM_VERSION="0.9.6"
+export KUBECTL_VERSION="1.7.6"
+export KUBEFED_VERSION="1.7.6"
+export KOPS_VERSION="1.7.0"
+export HUGO_VERSION="0.27.1"
+export TERRAFORM_VERSION="0.10.6"
 ```
 
 
