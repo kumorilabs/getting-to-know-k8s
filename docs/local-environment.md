@@ -40,9 +40,9 @@ sudo usermod -aG docker ${USER}
 export HUGO_VERSION="0.27.1"
 wget https://github.com/spf13/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_Linux-64bit.tar.gz
 tar -xf hugo_${HUGO_VERSION}_Linux-64bit.tar.gz
-sudo chmod +x hugo_${HUGO_VERSION}_linux_amd64/hugo_${HUGO_VERSION}_linux_amd64
-sudo mv hugo_${HUGO_VERSION}_linux_amd64/hugo_${HUGO_VERSION}_linux_amd64 /usr/local/bin/hugo
-rm -rf hugo_${HUGO_VERSION}_linux_amd64/ hugo_${HUGO_VERSION}_Linux-64bit.tar.gz
+sudo chmod +x hugo
+sudo mv hugo /usr/local/bin/hugo
+rm -rf hugo_${HUGO_VERSION}_Linux-64bit.tar.gz
 ```
 
 * [Terraform](https://www.terraform.io/downloads.html)
